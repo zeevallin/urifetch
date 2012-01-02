@@ -20,8 +20,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "urifetch"
   gem.homepage = "http://github.com/zeeraw/Urifetch"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = "Match URL's to request strategies and retrieve them in a usable format."
+  gem.description = "Uriftech allows you to fetch data from any URL using pattern matching. The library allows for dynamically adding match handlers as well as build your own strategies."
   gem.email = "philip@vallin.se"
   gem.authors = ["Philip Vieira"]
   # dependencies defined in Gemfile
