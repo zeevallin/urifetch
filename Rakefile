@@ -3,7 +3,7 @@
 require 'rubygems'
 require 'bundler'
 begin
-  Bundler.setup(:default, :development)
+  Bundler.setup(:test, :development)
 rescue Bundler::BundlerError => e
   $stderr.puts e.message
   $stderr.puts "Run `bundle install` to install missing gems"
@@ -12,10 +12,13 @@ end
 require 'rake'
 
 require 'jeweler'
+
+require './lib/urifetch/version'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
+  gem.version = Uriversal::Version::STRING
   gem.name = "urifetch"
-  gem.homepage = "http://github.com/zeeraw/urifetch"
+  gem.homepage = "http://github.com/zeeraw/Urifetch"
   gem.license = "MIT"
   gem.summary = %Q{TODO: one-line summary of your gem}
   gem.description = %Q{TODO: longer description of your gem}
