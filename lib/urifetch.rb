@@ -29,10 +29,12 @@ module Urifetch
     !(url =~ /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix).nil?
   end
   
+Urifetch.register do
+  match /(.*)/i, :test
 end
 
 Urifetch::Strategy.layout(:test) do
 end
 
-Urifetch::Strategy.layout(:default) do
-end
+# Urifetch::Strategy.layout(:default) do
+# end
