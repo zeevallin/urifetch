@@ -29,6 +29,12 @@ module Urifetch
     !(url =~ /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix).nil?
   end
   
+  def self.register(&block)
+    @@handler.instance_eval(&block)
+  end
+  
+end
+
 Urifetch.register do
   match /(.*)/i, :test
 end
