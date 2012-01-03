@@ -14,7 +14,7 @@ module Urifetch
       previous_match = url.match(DEFAULT_MATCH_STRING) if previous_match.nil?
       @handlers.each do |key,val|
         m = url.match(key)
-        return val.find(url,m) if m != 0
+        return val.find(url,m) if m != 0 and !m.nil?
       end
       return Urifetch::Strategy.apply(@strategy_key, with: previous_match)
     end
