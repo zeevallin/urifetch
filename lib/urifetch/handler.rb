@@ -7,7 +7,7 @@ module Urifetch
       @handlers = {}
       raise ArgumentError "strategy ('#{strategy.class}') needs to be a 'Symbol'" unless strategy_key.kind_of?(Symbol)
       @strategy_key = strategy_key || DEFAULT_STRATEGY
-      yield if block_given?
+      instance_eval(&block) if block_given?
     end
     
     def find(url,previous_match=nil)
@@ -23,7 +23,7 @@ module Urifetch
     
     def match(string,strategy,&block)
       raise ArgumentError "matcher ('#{key.class}') needs to be either 'String' or 'Regexp'" unless [String,Regexp].include?(string.class)
-      @dealers[key] = Handler.new(strategy,&block)
+      @handlers[string] = Handler.new(strategy,&block)
     end
     
   end
