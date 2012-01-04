@@ -12,16 +12,17 @@ module Urifetch
       @@layouts
     end
     
-    attr_reader :layout, :match_data
+    attr_reader :layout, :match_data, :layout_key
     
     def initialize(layout_key,match_data)
+      @layout_key = layout_key
       @match_data = match_data
       @layout = @@layouts[layout_key]
       raise "no matching layouts found on #{layout_key}" unless @layout
     end
     
     def self.layout(layout_key,&block)
-      layouts[layout_key] = Layout.new(layout_key)
+      layouts[layout_key] = Layout.new(layout_key,&block)
     end
     
     def self.apply(layout_key,args={})
@@ -39,7 +40,7 @@ module Urifetch
         request = open(Addressable::URI.heuristic_parse(match_data.string).to_s)
         status  = request.status
         run_on_success!(request)
-      rescue OpenURI::HTTPError, OpenURI::HTTPError => error
+      rescue OpenURI::HTTPError => error
         status  = (error.message.split(" ",2))
         run_on_failure!(error)
       rescue SocketError => error
@@ -55,15 +56,15 @@ module Urifetch
     private
     
     def run_before!
-      instance_exec(&layout.before)
+      instance_exec(&layout.before) unless layout.before.nil?
     end
     
     def run_on_success!(request)
-      instance_exec(request,&layout.success)
+      instance_exec(request,&layout.success) unless layout.before.nil?
     end
     
     def run_on_failure!(error)
-      instance_exec(error,&layout.failure)
+      instance_exec(error,&layout.failure) unless layout.before.nil?
     end
     
     def data

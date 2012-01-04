@@ -7,10 +7,10 @@ module Urifetch
       attr_reader :before, :success, :failure
       
       def initialize(args={},&block)
+        @success  = nil
+        @failure  = nil
+        @before   = nil
         instance_exec(args,&block) if block_given?
-        @success  = Proc.new {} if @success.nil?
-        @failure  = Proc.new {} if @failure.nil?
-        @before   = Proc.new {} if @before.nil?
       end
       
       def after_success(&block)

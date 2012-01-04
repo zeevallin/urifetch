@@ -19,23 +19,7 @@ describe Urifetch::Strategy::Layout do
       
     end
   end
-  
-  describe '#initialize' do
-    
-    it 'should set on_success to empty proc unless proc is defined' do
-      @layout.success.should be_an_instance_of Proc
-    end
-    
-    it 'should set on_failure to empty proc unless proc is defined' do
-      @layout.failure.should be_an_instance_of Proc
-    end
-    
-    it 'should set before to empty proc unless proc is defined' do
-      @layout.before.should be_an_instance_of Proc
-    end
-    
-  end
-  
+
   describe 'after_success' do
     
     it 'should overwrite the value proc' do
