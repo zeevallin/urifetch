@@ -7,7 +7,7 @@ module Urifetch
   DEFAULT_MATCH_STRING = /(.*)/i
   DEFAULT_STRATEGY = :default
   
-  autoload :Handler,   'urifetch/handler'
+  autoload :Handler,  'urifetch/handler'
   autoload :Strategy, 'urifetch/strategy'
   autoload :Response, 'urifetch/response'
   
@@ -36,11 +36,39 @@ module Urifetch
 end
 
 Urifetch.register do
-  match /(.*)/i, :test
 end
 
 Urifetch::Strategy.layout(:test) do
+  
+  before_request do
+  end
+  
+  after_success do |request|
+  end
+  
+  after_failure do |error|
+  end
+  
 end
 
-# Urifetch::Strategy.layout(:default) do
-# end
+Urifetch::Strategy.layout(:default) do
+  
+  before_request do 
+  end
+  
+  after_success do |request|
+    doc = Nokogiri::HTML(request)
+
+    # Title
+    title = doc.css('title').first
+    data.title = title.nil? ? match_data[0] : title.content.strip
+    
+    # Favicon
+    favicon = doc.css('link[rel="shortcut icon"], link[rel="icon shortcut"], link[rel="shortcut"], link[rel="icon"]').first
+    data.favicon = favicon.nil? ? '' : favicon['href'].strip
+  end
+  
+  after_failure do |error|
+  end
+  
+end

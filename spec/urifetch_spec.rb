@@ -22,4 +22,18 @@ describe Urifetch do
     
   end
   
+  describe 'strategy' do
+    
+    describe 'default' do
+      
+      it 'should return title and favicon for valid path' do
+        @response = Urifetch.fetch_from("http://www.youtube.com")
+        @response.data.should have_key(:title)
+        @response.data.should have_key(:favicon)
+      end
+      
+    end
+    
+  end
+  
 end
