@@ -68,12 +68,7 @@ Urifetch::Strategy.layout(:default) do
     favicon = favicon.nil? ? nil : favicon['href'].strip
     if favicon
       if favicon.match(/^https?:\/\//i).nil?
-        favicon.match(/^\//i) do
-          favicon = uri.scheme + "://" + uri.host + favicon
-        end
-        favicon.match(/^[^\/]/i) do
-          favicon = uri.scheme + "://" + uri.host + uri.path.gsub(/((.*)(\/(.*\..*$)))/i,'\2/') + favicon
-        end
+        favicon = uri.scheme + "://" + uri.host + uri.path.gsub(/((.*)(\/(.*\..*$)))/i,'\2/') + favicon
       end
       data.favicon = favicon
     end
