@@ -32,6 +32,12 @@ describe Urifetch do
         @response.data.should have_key(:favicon)
       end
       
+      it 'should return title and NOT favicon for valid path' do
+        @response = Urifetch.fetch_from("http://www.google.com")
+        @response.data.should have_key(:title)
+        @response.data.should_not have_key(:favicon)
+      end
+
     end
     
   end

@@ -65,7 +65,18 @@ Urifetch::Strategy.layout(:default) do
     
     # Favicon
     favicon = doc.css('link[rel="shortcut icon"], link[rel="icon shortcut"], link[rel="shortcut"], link[rel="icon"]').first
-    data.favicon = favicon.nil? ? '' : favicon['href'].strip
+    favicon = favicon.nil? ? nil : favicon['href'].strip
+    if favicon
+      if favicon.match(/^https?:\/\//i).nil?
+        favicon.match(/^\//i) do
+          favicon = uri.scheme + "://" + uri.host + favicon
+        end
+        favicon.match(/^[^\/]/i) do
+          favicon = uri.scheme + "://" + uri.host + uri.path.gsub(/((.*)(\/(.*\..*$)))/i,'\2/') + favicon
+        end
+      end
+      data.favicon = favicon
+    end
   end
   
   after_failure do |error|
