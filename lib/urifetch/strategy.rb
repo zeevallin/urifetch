@@ -12,7 +12,7 @@ module Urifetch
       @@layouts
     end
     
-    attr_reader :layout, :match_data, :layout_key
+    attr_reader :layout, :match_data, :layout_key, :uri
     
     def initialize(layout_key,match_data)
       @layout_key = layout_key
@@ -37,7 +37,8 @@ module Urifetch
     def execute!
       run_before!
       begin
-        request = open(Addressable::URI.heuristic_parse(match_data.string).to_s)
+        @uri = Addressable::URI.heuristic_parse(match_data.string)
+        request = open(@uri.to_s)
         status  = request.status
         run_on_success!(request)
       rescue OpenURI::HTTPError => error
