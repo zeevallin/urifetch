@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "urifetch"
-  s.version = "0.0.1.rc3"
+  s.version = "0.0.1.rc4"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Philip Vieira"]
-  s.date = "2012-01-04"
+  s.date = "2012-01-06"
   s.description = "Urifetch allows you to fetch data from any URL using pattern matching. The library allows for dynamically adding match handlers as well as build your own strategies."
   s.email = "philip@vallin.se"
   s.extra_rdoc_files = [
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     ".rspec",
+    ".rvmrc",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
