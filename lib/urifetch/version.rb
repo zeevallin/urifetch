@@ -5,7 +5,7 @@ module Uriversal
     MAJOR = 0
     MINOR = 0
     PATCH = 1
-    BUILD = 'rc5'
+    BUILD = 'rc6'
 
     STRING = [MAJOR, MINOR, PATCH, BUILD].compact.join('.')
     
