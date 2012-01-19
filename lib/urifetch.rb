@@ -1,5 +1,6 @@
 require 'hashie/mash'
 require 'addressable/uri'
+#require 'pry'
 
 module Urifetch
   
@@ -96,10 +97,29 @@ Urifetch::Strategy.layout(:image) do
     # File Type
     data.mime_type = request.meta['content-type']
     
+    unless data.mime_type.match(/text\/html/i).nil?
+      doc = Nokogiri::HTML(request)
+      t = data.title.sub(/^.*\:/i,'')
+      t2 = t.sub(/\./i,"\\.")
+      src = doc.search('img').map(&:attributes).map{|h|h["src"].to_s}.reject{|u|u.match(/#{t2}/i).nil?}.first
+      src.sub!(/^\/\//i,'http://')
+      if src
+        data.title = t
+        @uri = Addressable::URI.heuristic_parse(src)
+        data.match_id = @uri.to_s
+        request = open(@uri.to_s,'rb')
+        data.mime_type = request.meta['content-type']
+      end
+    end
+    
     # Image Size
     data.image_size = [nil,nil]
     3.times do |i|
-      data.image_size = ImageSize.new(request).get_size
+      begin
+        data.image_size = ImageSize.new(request).get_size
+      rescue NoMethodError => e
+        data.image_size = ImageSize.new(request.read).get_size#  unless e.message.match(/undefined method `type' for/).nil?
+      end
       break if data.image_size != [nil,nil]
     end
   end

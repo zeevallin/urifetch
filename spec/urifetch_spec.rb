@@ -43,23 +43,63 @@ describe Urifetch do
     describe 'image' do
       
       it 'should return image properties and file name for valid png file' do
-        @response = Urifetch.fetch_from("http://www.google.com/intl/en_com/images/srpr/logo3w.png")
-        
+        @url = "http://www.google.com/intl/en_com/images/srpr/logo3w.png"
+        @title = "logo3w.png"
+        @match_id = "http://www.google.com/intl/en_com/images/srpr/logo3w.png"
+        @mime_type = "image/png"
+        @image_size = [275, 95]
+      end
+      
+      it 'should return image properties and file name for valid jpg file' do
+        @url = "http://i.imgur.com/ab9Gd.jpg"
+        @title = "ab9Gd.jpg"
+        @match_id = "http://i.imgur.com/ab9Gd.jpg"
+        @mime_type = "image/jpeg"
+        @image_size = [492, 362]
+      end
+      
+      it 'should return image properties and file name for valid gif file' do
+        @url = "http://upload.wikimedia.org/wikipedia/commons/2/2c/Rotating_earth_%28large%29.gif"
+        @title = "Rotating_earth_%28large%29.gif"
+        @match_id = "http://upload.wikimedia.org/wikipedia/commons/2/2c/Rotating_earth_%28large%29.gif"
+        @mime_type = "image/gif"
+        @image_size = [400, 400]
+      end
+      
+      it 'should return image properties and file name for valid bmp file' do
+        @url = "http://www.gonmad.co.uk/satnav/bmp_blank.bmp"
+        @title = "bmp_blank.bmp"
+        @match_id = "http://www.gonmad.co.uk/satnav/bmp_blank.bmp"
+        @mime_type = "image/bmp"
+        @image_size = [16, 16]
+      end
+      
+      it 'should return image properties and file name for valid gif file even though the initial minetype is html' do
+        @url = "http://en.wikipedia.org/wiki/File:Sunflower_as_gif_small.gif"
+        @title = "Sunflower_as_gif_small.gif"
+        @match_id = "http://upload.wikimedia.org/wikipedia/commons/e/e2/Sunflower_as_gif_small.gif"
+        @mime_type = "image/gif"
+        @image_size = [250, 297]
+      end
+      
+      after(:each) do
+        @response = Urifetch.fetch_from(@url)
+
         # Check Title
         @response.data.should have_key(:title)
-        @response.data[:title].should == "logo3w.png"
+        @response.data[:title].should == @title
         
         # Check Match ID
         @response.data.should have_key(:match_id)
-        @response.data[:match_id].should == "http://www.google.com/intl/en_com/images/srpr/logo3w.png"
+        @response.data[:match_id].should == @match_id
         
         # Check FileType
         @response.data.should have_key(:mime_type)
-        @response.data[:mime_type].should == "image/png"
+        @response.data[:mime_type].should == @mime_type
         
         # Check ImageSize
         @response.data.should have_key(:image_size)
-        @response.data[:image_size].should == [275, 95]
+        @response.data[:image_size].should == @image_size
       end
       
     end
