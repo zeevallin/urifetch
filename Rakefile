@@ -16,7 +16,7 @@ require 'jeweler'
 require './lib/urifetch/version'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.version = Uriversal::Version::STRING
+  gem.version = Urifetch::Version::STRING
   gem.name = "urifetch"
   gem.homepage = "http://github.com/zeeraw/Urifetch"
   gem.license = "MIT"
