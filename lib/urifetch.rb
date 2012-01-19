@@ -1,6 +1,5 @@
 require 'hashie/mash'
 require 'addressable/uri'
-require 'pry'
 
 module Urifetch
   
