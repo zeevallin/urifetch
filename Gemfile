@@ -9,6 +9,7 @@ source "http://rubygems.org"
 gem 'addressable'
 gem 'hashie'
 gem 'nokogiri'
+gem 'imagesize'
 
 group :development do
   gem "rspec"

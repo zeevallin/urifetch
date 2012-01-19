@@ -1,5 +1,6 @@
 require 'hashie/mash'
 require 'addressable/uri'
+require 'pry'
 
 module Urifetch
   
@@ -35,6 +36,7 @@ module Urifetch
 end
 
 Urifetch.register do
+  match /\.(PCX|PSD|XPM|TIFF|XBM|PGM|PBM|PPM|BMP|JPEG|JPG||PNG|GIF|SWF)$/i, :image
 end
 
 Urifetch::Strategy.layout(:test) do
@@ -74,6 +76,41 @@ Urifetch::Strategy.layout(:default) do
   end
   
   after_failure do |error|
+  end
+  
+end
+
+Urifetch::Strategy.layout(:image) do
+  
+  before_request do
+  end
+  
+  after_success do |request|
+    # Works for ["PCX", "PSD", "XPM", "TIFF", "XBM", "PGM", "PBM", "PPM", "BMP", "JPEG", "PNG", "GIF", "SWF"]
+    
+    # Match ID
+    data.match_id = request.base_uri.to_s
+    
+    # Title
+    data.title = File.basename(request.base_uri.to_s)
+    
+    # File Type
+    data.mime_type = request.meta['content-type']
+    
+    # Image Size
+    data.image_size = [nil,nil]
+    3.times do |i|
+      data.image_size = ImageSize.new(request).get_size
+      break if data.image_size != [nil,nil]
+    end
+  end
+  
+  after_failure do |error|
+    # File Type
+    data.mime_type = 'unknown'
+    
+    # Image Size
+    data.image_size = [0,0]
   end
   
 end

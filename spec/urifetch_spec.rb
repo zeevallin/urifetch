@@ -40,6 +40,30 @@ describe Urifetch do
 
     end
     
+    describe 'image' do
+      
+      it 'should return image properties and file name for valid png file' do
+        @response = Urifetch.fetch_from("http://www.google.com/intl/en_com/images/srpr/logo3w.png")
+        
+        # Check Title
+        @response.data.should have_key(:title)
+        @response.data[:title].should == "logo3w.png"
+        
+        # Check Match ID
+        @response.data.should have_key(:match_id)
+        @response.data[:match_id].should == "http://www.google.com/intl/en_com/images/srpr/logo3w.png"
+        
+        # Check FileType
+        @response.data.should have_key(:mime_type)
+        @response.data[:mime_type].should == "image/png"
+        
+        # Check ImageSize
+        @response.data.should have_key(:image_size)
+        @response.data[:image_size].should == [275, 95]
+      end
+      
+    end
+    
   end
   
 end

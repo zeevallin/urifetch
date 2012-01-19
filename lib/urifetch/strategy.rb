@@ -2,6 +2,8 @@ module Urifetch
   
   require 'open-uri'
   require 'nokogiri'
+  require 'image_size'
+  require 'stringio'
   
   class Strategy
     
@@ -12,7 +14,7 @@ module Urifetch
       @@layouts
     end
     
-    attr_reader :layout, :match_data, :layout_key, :uri
+    attr_reader :layout, :match_data, :layout_key, :uri, :filehead
     
     def initialize(layout_key,match_data)
       @layout_key = layout_key
@@ -38,7 +40,7 @@ module Urifetch
       run_before!
       begin
         @uri = Addressable::URI.heuristic_parse(match_data.string)
-        request = open(@uri.to_s)
+        request = open(@uri.to_s,'rb')
         status  = request.status
         run_on_success!(request)
       rescue OpenURI::HTTPError => error
