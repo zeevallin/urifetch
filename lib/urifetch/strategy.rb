@@ -43,7 +43,6 @@ module Urifetch
         run_on_success!(request)
       rescue OpenURI::HTTPError => error
         status  = (error.message.split(" ",2))
-        @uri = request.base_uri
         run_on_failure!(error)
       rescue SocketError => error
         status  = (["400","Bad Request"])
@@ -70,6 +69,7 @@ module Urifetch
     end
     
     def run_on_success!(request)
+      @uri = request.base_uri
       instance_exec(request,&layout.success) unless layout.before.nil?
     end
     
