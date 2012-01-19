@@ -50,9 +50,14 @@ module Urifetch
       rescue Errno::ENOENT => error
         status  = (["404","File not Found"])
         run_on_failure!(error)
-      rescue RuntimeError
+      rescue Errno::ECONNREFUSED => error
+        status  = (["401","Unauthorized"])
+        run_on_failure!(error)
+      rescue RuntimeError => error
         status  = (["400","Bad Request"])
         run_on_failure!(error)
+      rescue
+        status  = (["500","Server Error"])
       end
       return Response.new(status: status, strategy: self, data: @data)
     end
