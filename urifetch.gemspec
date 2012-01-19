@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "urifetch"
-  s.version = "0.0.2.rc4"
+  s.version = "0.0.3.rc0"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Philip Vieira"]
@@ -54,6 +54,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<addressable>, [">= 0"])
       s.add_runtime_dependency(%q<hashie>, [">= 0"])
       s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
+      s.add_runtime_dependency(%q<imagesize>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["= 1.1.rc"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
@@ -64,6 +65,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<addressable>, [">= 0"])
       s.add_dependency(%q<hashie>, [">= 0"])
       s.add_dependency(%q<nokogiri>, [">= 0"])
+      s.add_dependency(%q<imagesize>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<bundler>, ["= 1.1.rc"])
       s.add_dependency(%q<jeweler>, [">= 0"])
@@ -75,6 +77,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<addressable>, [">= 0"])
     s.add_dependency(%q<hashie>, [">= 0"])
     s.add_dependency(%q<nokogiri>, [">= 0"])
+    s.add_dependency(%q<imagesize>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<bundler>, ["= 1.1.rc"])
     s.add_dependency(%q<jeweler>, [">= 0"])
