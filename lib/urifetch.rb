@@ -97,6 +97,9 @@ Urifetch::Strategy.layout(:image) do
     # File Type
     data.mime_type = request.meta['content-type']
     
+    # Preview File Source
+    data.preview_image = request.base_uri.to_s
+    
     unless data.mime_type.match(/text\/html/i).nil?
       doc = Nokogiri::HTML(request)
       t = data.title.sub(/^.*\:/i,'')
@@ -122,6 +125,7 @@ Urifetch::Strategy.layout(:image) do
       end
       break if data.image_size != [nil,nil]
     end
+    
   end
   
   after_failure do |error|
