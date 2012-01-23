@@ -58,8 +58,8 @@ module Urifetch
       rescue RuntimeError => error
         status  = (["400","Bad Request"])
         run_on_failure!(error)
-      rescue
-        status  = (["500","Server Error"])
+      rescue Exception => e
+        status  = (["500","Server Error",e])
       end
       return Response.new(status: status, strategy: self, data: @data)
     end
