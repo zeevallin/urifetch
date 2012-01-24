@@ -14,9 +14,10 @@ module Urifetch
       @@layouts
     end
     
-    attr_reader :layout, :match_data, :layout_key, :uri, :filehead
+    attr_reader :layout, :match_data, :layout_key, :uri, :filehead, :skip_request
     
-    def initialize(layout_key,match_data)
+    def initialize(layout_key,match_data,args={})
+      @skip_request = args[:skip_request] || false
       @layout_key = layout_key
       @match_data = match_data
       @layout = @@layouts[layout_key]
@@ -38,28 +39,32 @@ module Urifetch
     
     def execute!
       run_before!
-      begin
-        @uri = Addressable::URI.heuristic_parse(match_data.string)
-        request = open(@uri.to_s,'rb')
-        status  = request.status
-        run_on_success!(request)
-      rescue OpenURI::HTTPError => error
-        status  = (error.message.split(" ",2))
-        run_on_failure!(error)
-      rescue SocketError => error
-        status  = (["400","Bad Request"])
-        run_on_failure!(error)
-      rescue Errno::ENOENT => error
-        status  = (["404","File not Found"])
-        run_on_failure!(error)
-      rescue Errno::ECONNREFUSED => error
-        status  = (["401","Unauthorized"])
-        run_on_failure!(error)
-      rescue RuntimeError => error
-        status  = (["400","Bad Request"])
-        run_on_failure!(error)
-      rescue Exception => e
-        status  = (["500","Server Error",e])
+      if skip_request
+        begin
+          @uri = Addressable::URI.heuristic_parse(match_data.string)
+          request = open(@uri.to_s,'rb')
+          status  = request.status
+          run_on_success!(request)
+        rescue OpenURI::HTTPError => error
+          status  = (error.message.split(" ",2))
+          run_on_failure!(error)
+        rescue SocketError => error
+          status  = (["400","Bad Request"])
+          run_on_failure!(error)
+        rescue Errno::ENOENT => error
+          status  = (["404","File not Found"])
+          run_on_failure!(error)
+        rescue Errno::ECONNREFUSED => error
+          status  = (["401","Unauthorized"])
+          run_on_failure!(error)
+        rescue RuntimeError => error
+          status  = (["400","Bad Request"])
+          run_on_failure!(error)
+        rescue Exception => e
+          status  = (["500","Server Error",e])
+        end
+      else
+        status  = (["200","OK"])
       end
       return Response.new(status: status, strategy: self, data: @data)
     end
