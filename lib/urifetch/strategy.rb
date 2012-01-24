@@ -39,7 +39,7 @@ module Urifetch
     
     def execute!
       run_before!
-      unless skip_request
+      if skip_request == false
         begin
           @uri = Addressable::URI.heuristic_parse(match_data.string)
           request = open(@uri.to_s,'rb')
