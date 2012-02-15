@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "urifetch"
-  s.version = "0.0.5.rc1"
+  s.version = "0.1.0"
 
-  s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Philip Vieira"]
-  s.date = "2012-01-24"
+  s.date = "2012-02-15"
   s.description = "Urifetch allows you to fetch data from any URL using pattern matching. The library allows for dynamically adding match handlers as well as build your own strategies."
   s.email = "philip@vallin.se"
   s.extra_rdoc_files = [
@@ -27,17 +27,15 @@ Gem::Specification.new do |s|
     "Rakefile",
     "lib/.DS_Store",
     "lib/urifetch.rb",
-    "lib/urifetch/handler.rb",
+    "lib/urifetch/ext/opengraph.rb",
     "lib/urifetch/response.rb",
+    "lib/urifetch/router.rb",
     "lib/urifetch/strategy.rb",
-    "lib/urifetch/strategy/layout.rb",
+    "lib/urifetch/strategy/base.rb",
+    "lib/urifetch/strategy/image.rb",
     "lib/urifetch/version.rb",
     "spec/helpers/url_helpers.rb",
     "spec/spec_helper.rb",
-    "spec/urifetch/handler_spec.rb",
-    "spec/urifetch/response_spec.rb",
-    "spec/urifetch/strategy/layout_spec.rb",
-    "spec/urifetch/strategy_spec.rb",
     "spec/urifetch_spec.rb",
     "urifetch.gemspec"
   ]
@@ -55,6 +53,8 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<hashie>, [">= 0"])
       s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
       s.add_runtime_dependency(%q<imagesize>, [">= 0"])
+      s.add_runtime_dependency(%q<activesupport>, [">= 0"])
+      s.add_runtime_dependency(%q<actionpack>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["= 1.1.rc"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
@@ -66,6 +66,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<hashie>, [">= 0"])
       s.add_dependency(%q<nokogiri>, [">= 0"])
       s.add_dependency(%q<imagesize>, [">= 0"])
+      s.add_dependency(%q<activesupport>, [">= 0"])
+      s.add_dependency(%q<actionpack>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<bundler>, ["= 1.1.rc"])
       s.add_dependency(%q<jeweler>, [">= 0"])
@@ -78,6 +80,8 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<hashie>, [">= 0"])
     s.add_dependency(%q<nokogiri>, [">= 0"])
     s.add_dependency(%q<imagesize>, [">= 0"])
+    s.add_dependency(%q<activesupport>, [">= 0"])
+    s.add_dependency(%q<actionpack>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<bundler>, ["= 1.1.rc"])
     s.add_dependency(%q<jeweler>, [">= 0"])
