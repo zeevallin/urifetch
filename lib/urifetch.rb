@@ -10,7 +10,7 @@ require 'timeout'
 require 'action_view'
 include ActionView::Helpers::NumberHelper
 
-require 'pry'
+# require 'pry'
 
 module Urifetch
   
