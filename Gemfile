@@ -10,6 +10,8 @@ gem 'addressable'
 gem 'hashie'
 gem 'nokogiri'
 gem 'imagesize'
+gem 'activesupport'
+gem 'actionpack'
 
 group :development do
   gem "rspec"

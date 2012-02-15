@@ -2,12 +2,20 @@ module Urifetch
 
   class Response
     
-    attr_reader :status, :strategy, :data
+    attr_accessor :status, :strategy_key, :data
     
-    def initialize(args={})
-      @status       = args[:status]       || ['0','']
-      @strategy     = args[:strategy]     || Strategy.new(:test,"".match(//))
-      @data         = args[:data]         || Hashie::Mash.new
+    def initialize(status,strategy_key,data)
+      @status         = status
+      @strategy_key   = strategy_key
+      @data           = data
+    end
+    
+    def to_h
+      @data
+    end
+    
+    def to_json
+      to_h.to_json
     end
     
   end
