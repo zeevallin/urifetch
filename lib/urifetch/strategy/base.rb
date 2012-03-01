@@ -47,13 +47,13 @@ module Urifetch
       def process_request
                 
         # Start by setting the URI
-        set :url, uri.to_s
+        set :url, uri.to_s.sub(/\/$/,"")
         
         doc = Nokogiri::HTML.parse(@request)
                 
         # Open Auth data
         if og = OpenGraph.parse(doc)
-          set :url,         og.url, override: true
+          set :url,         og.url.to_s.sub(/\/$/,""), override: true
           set :title,       og.title
           set :image,       og.image
           set :description, og.description
