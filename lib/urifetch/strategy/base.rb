@@ -66,7 +66,7 @@ module Urifetch
         end
         
         favicon = doc.css('link[rel="shortcut icon"], link[rel="icon shortcut"], link[rel="shortcut"], link[rel="icon"]').first
-        favicon = favicon.nil? ? nil : favicon['href'].strip
+        favicon = favicon.nil? ? nil : favicon['href'].try(:strip)
         if favicon
           if favicon.match(/^https?:\/\//i).nil?
             favicon = uri.scheme + "://" + uri.host.sub(/\/$/,"") + "/" + favicon.sub(/^\//,"")
@@ -76,12 +76,12 @@ module Urifetch
         
         # Fallback Image
         image = doc.css('img').first
-        image = image.present? ? image['src'].strip : nil
+        image = image.nil? ? nil : image['src'].try(:strip)
         if image
           if image.match(/^https?:\/\//i).nil?
             image = uri.scheme + "://" + uri.host.sub(/\/$/,"") + "/" + image.sub(/^\//,"")
           end
-          set :image, image unless get(:image).present?
+          set :image, image
         end
         
       end
