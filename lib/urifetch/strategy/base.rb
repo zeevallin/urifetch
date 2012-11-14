@@ -74,6 +74,16 @@ module Urifetch
           set :favicon, favicon
         end
         
+        # Fallback Image
+        image = doc.css('img').first
+        image = image.present? ? image['src'].strip : nil
+        if image
+          if image.match(/^https?:\/\//i).nil?
+            image = uri.scheme + "://" + uri.host.sub(/\/$/,"") + "/" + image.sub(/^\//,"")
+          end
+          set :image, image unless get(:image).present?
+        end
+        
       end
       
       private
