@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "urifetch"
-  s.version = "0.1.0.rc2"
+  s.version = "0.1.1.rc1"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Philip Vieira"]
-  s.date = "2012-03-01"
+  s.date = "2012-11-14"
   s.description = "Urifetch allows you to fetch data from any URL using pattern matching. The library allows for dynamically adding match handlers as well as build your own strategies."
   s.email = "philip@vallin.se"
   s.extra_rdoc_files = [
@@ -42,7 +42,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/zeeraw/Urifetch"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.24"
   s.summary = "Match URL's to request strategies and retrieve them in a usable format."
 
   if s.respond_to? :specification_version then
