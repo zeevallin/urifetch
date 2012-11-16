@@ -2,8 +2,8 @@ module Urifetch
   
   module Strategy
     
-    autoload :Base, 'urifetch/strategy/base'
-    autoload :Image, 'urifetch/strategy/image'
+    require "#{File.expand_path(File.dirname(__FILE__))}/strategy/base"
+    require "#{File.expand_path(File.dirname(__FILE__))}/strategy/image"
     
   end
   

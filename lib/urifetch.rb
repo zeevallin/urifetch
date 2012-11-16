@@ -14,12 +14,12 @@ include ActionView::Helpers::NumberHelper
 
 module Urifetch
   
-  autoload :Response, 'urifetch/response'
-  autoload :Strategy, 'urifetch/strategy'
-  autoload :Router,   'urifetch/router'
-  autoload :Version,  'urifetch/version'
-
-  autoload :OpenGraph, 'urifetch/ext/opengraph'
+  require "#{File.expand_path(File.dirname(__FILE__))}/urifetch/response"
+  require "#{File.expand_path(File.dirname(__FILE__))}/urifetch/strategy"
+  require "#{File.expand_path(File.dirname(__FILE__))}/urifetch/router"
+  require "#{File.expand_path(File.dirname(__FILE__))}/urifetch/version"
+  
+  require "#{File.expand_path(File.dirname(__FILE__))}/urifetch/ext/opengraph"
   
   @@router = Router.new()
   
