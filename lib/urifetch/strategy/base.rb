@@ -49,8 +49,8 @@ module Urifetch
         # Start by setting the URI
         set :url, uri.to_s.sub(/\/$/,"")
         
-        doc = Nokogiri::HTML.parse(@request,false)
-        
+        doc = Nokogiri::HTML.parse(@request)
+                
         # Image
         image = doc.css('img').first
         image = image.nil? ? nil : image['src'].try(:strip)
@@ -62,7 +62,7 @@ module Urifetch
         end
                 
         # Open Auth data
-        if og = OpenGraph.parse(doc)
+        if og = OpenGraph.parse(doc,false)
           set :url,         og.url.to_s.sub(/\/$/,""),  override: true
           set :title,       og.title,                   override: true
           set :image,       og.image,                   override: true
@@ -97,7 +97,9 @@ module Urifetch
       end
             
       def set(key,value,args={})
-        response.data[key.to_s] = value if (args[:override] == true) or response.data[key.to_s].nil? unless value.nil?
+        if value.present?
+          response.data[key.to_s] = value if (args[:override] || !response.data[key.to_s].present?)
+        end
       end
       
       def set?(key)
