@@ -49,14 +49,14 @@ module Urifetch
         # Start by setting the URI
         set :url, uri.to_s.sub(/\/$/,"")
         
-        doc = Nokogiri::HTML.parse(@request)
+        doc = Nokogiri::HTML.parse(@request,false)
                 
         # Open Auth data
         if og = OpenGraph.parse(doc)
-          set :url,         og.url.to_s.sub(/\/$/,""), override: true
-          set :title,       og.title
-          set :image,       og.image
-          set :description, og.description
+          set :url,         og.url.to_s.sub(/\/$/,""), override: true if og.url
+          set :title,       og.title if og.title
+          set :image,       og.image if og.image
+          set :description, og.description if og.description
         end
                 
         # Custom CSS data

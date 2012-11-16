@@ -5,7 +5,7 @@ module Urifetch
     MAJOR = 0
     MINOR = 1
     PATCH = 1
-    BUILD = 'rc2'
+    BUILD = 'rc3'
 
     STRING = [MAJOR, MINOR, PATCH, BUILD].compact.join('.')
     
