@@ -50,13 +50,23 @@ module Urifetch
         set :url, uri.to_s.sub(/\/$/,"")
         
         doc = Nokogiri::HTML.parse(@request,false)
+        
+        # Image
+        image = doc.css('img').first
+        image = image.nil? ? nil : image['src'].try(:strip)
+        if image
+          if image.match(/^https?:\/\//i).nil?
+            image = uri.scheme + "://" + uri.host.sub(/\/$/,"") + "/" + image.sub(/^\//,"")
+          end
+          set :image, image
+        end
                 
         # Open Auth data
         if og = OpenGraph.parse(doc)
-          set :url,         og.url.to_s.sub(/\/$/,""), override: true if og.url
-          set :title,       og.title if og.title
-          set :image,       og.image if og.image
-          set :description, og.description if og.description
+          set :url,         og.url.to_s.sub(/\/$/,""),  override: true
+          set :title,       og.title,                   override: true
+          set :image,       og.image,                   override: true
+          set :description, og.description,             override: true
         end
                 
         # Custom CSS data
@@ -72,16 +82,6 @@ module Urifetch
             favicon = uri.scheme + "://" + uri.host.sub(/\/$/,"") + "/" + favicon.sub(/^\//,"")
           end
           set :favicon, favicon
-        end
-        
-        # Fallback Image
-        image = doc.css('img').first
-        image = image.nil? ? nil : image['src'].try(:strip)
-        if image
-          if image.match(/^https?:\/\//i).nil?
-            image = uri.scheme + "://" + uri.host.sub(/\/$/,"") + "/" + image.sub(/^\//,"")
-          end
-          set(:image, image) unless get(:image)
         end
         
       end
