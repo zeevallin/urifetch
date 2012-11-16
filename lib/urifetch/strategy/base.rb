@@ -81,7 +81,7 @@ module Urifetch
           if image.match(/^https?:\/\//i).nil?
             image = uri.scheme + "://" + uri.host.sub(/\/$/,"") + "/" + image.sub(/^\//,"")
           end
-          set :image, image
+          set(:image, image) unless get(:image)
         end
         
       end
